@@ -6,18 +6,59 @@ Frontend and backend are **completely separate**.
 
 ```
 ITM-NAVIGATION/
-├── frontend/   React 19 + Vite + React Router + Axios + Leaflet
-├── backend/    Django + Django REST Framework + JWT + Supabase PostgreSQL
+├── frontend/          Website (React)
+├── backend/           API (Django)
+├── setup-windows.ps1  One-click Windows setup (PowerShell)
+├── setup-windows.bat  One-click Windows setup (CMD)
 └── README.md
 ```
 
-If you do **not** see both `frontend` and `backend` folders after unzipping, re-download from the PR/repo (do not use an incomplete artifact).
+## Windows pe website kaise chalayein (important)
+
+Aapka Downloads zip **incomplete** ho sakta hai (`backend` folder missing).  
+**Incomplete zip mat use karo.** Full project clone karo:
+
+### Step 1 — Full project download
+
+PowerShell mein yeh commands **ek-ek karke** chalao (`&&` mat use karo):
 
 ```powershell
-# In PowerShell, from the project root:
+cd $HOME\Downloads
+git clone -b cursor/itm-campus-navigator-6e99 https://github.com/Harshbajpai644/ITM-NAVIGATION.git
+cd ITM-NAVIGATION
 dir
-# You must see: backend, frontend, README.md
 ```
+
+`dir` mein **backend** aur **frontend** dono dikhne chahiye.
+
+### Step 2 — Setup
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+.\setup-windows.ps1
+```
+
+### Step 3 — Website start (2 windows)
+
+**Window 1 — API:**
+
+```powershell
+cd backend
+.\.venv\Scripts\Activate.ps1
+python manage.py runserver
+```
+
+**Window 2 — Website:**
+
+```powershell
+cd frontend
+npm run dev
+```
+
+Browser kholo: **http://localhost:5173**  
+Admin login: `admin` / `Admin@12345`
+
+> Need: [Python 3](https://www.python.org/downloads/) + [Node.js LTS](https://nodejs.org/) + [Git](https://git-scm.com/download/win) installed.
 
 ## Features
 
