@@ -5,8 +5,18 @@ Production-ready campus navigation platform with visitor passes, admin dashboard
 Frontend and backend are **completely separate**.
 
 ```
-frontend/   React 19 + Vite + React Router + Axios + Leaflet
-backend/    Django + Django REST Framework + JWT + Supabase PostgreSQL
+ITM-NAVIGATION/
+├── frontend/   React 19 + Vite + React Router + Axios + Leaflet
+├── backend/    Django + Django REST Framework + JWT + Supabase PostgreSQL
+└── README.md
+```
+
+If you do **not** see both `frontend` and `backend` folders after unzipping, re-download from the PR/repo (do not use an incomplete artifact).
+
+```powershell
+# In PowerShell, from the project root:
+dir
+# You must see: backend, frontend, README.md
 ```
 
 ## Features
@@ -17,34 +27,96 @@ backend/    Django + Django REST Framework + JWT + Supabase PostgreSQL
 4. **Buildings Module** — full CRUD, categories, search
 5. **REST APIs** — `/api/visitor-pass`, `/api/buildings`, `/api/admin`
 
-## Quick Start
+---
 
-### Backend
+## Quick Start — Windows (PowerShell)
+
+> PowerShell does **not** support `&&` or `source`. Run each command on its own line.
+
+### 1) Backend
+
+Open **PowerShell**, then:
+
+```powershell
+cd "C:\Users\harsh bajpai\Downloads\ITM-NAVIGATION-4644cba4962360fd5578fea9cde0b1dc8963e738"
+dir
+cd backend
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+copy .env.example .env
+python manage.py migrate
+python scripts\create_admin.py
+python scripts\seed_buildings.py
+python manage.py runserver
+```
+
+If `Activate.ps1` is blocked, run once:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+
+Then activate again:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+API: http://127.0.0.1:8000  
+Default admin: `admin` / `Admin@12345`
+
+### 2) Frontend (new PowerShell window)
+
+Keep the backend running. Open a **second** PowerShell window:
+
+```powershell
+cd "C:\Users\harsh bajpai\Downloads\ITM-NAVIGATION-4644cba4962360fd5578fea9cde0b1dc8963e738\frontend"
+npm install
+copy .env.example .env
+npm run dev
+```
+
+App: http://localhost:5173
+
+---
+
+## Quick Start — macOS / Linux (bash)
 
 ```bash
+# Backend
 cd backend
 python3 -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
+source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env        # already configured for local SQLite
+cp .env.example .env
 python manage.py migrate
 python scripts/create_admin.py
 python scripts/seed_buildings.py
 python manage.py runserver 0.0.0.0:8000
 ```
 
-Default admin: `admin` / `Admin@12345`
-
-### Frontend
-
 ```bash
+# Frontend (new terminal)
 cd frontend
 npm install
 cp .env.example .env
 npm run dev
 ```
 
-Open http://localhost:5173
+---
+
+## Get a complete copy (recommended)
+
+If folders are missing, clone the branch instead of using a partial zip:
+
+```powershell
+git clone -b cursor/itm-campus-navigator-6e99 https://github.com/Harshbajpai644/ITM-NAVIGATION.git
+cd ITM-NAVIGATION
+dir
+```
+
+---
 
 ## Supabase PostgreSQL
 
@@ -58,12 +130,12 @@ DATABASE_URL=postgresql://postgres.[REF]:[PASSWORD]@aws-0-[REGION].pooler.supaba
 
 Or set `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_PORT` individually.
 
-3. Run migrations again:
+3. Run migrations again (from `backend` with venv active):
 
-```bash
+```powershell
 python manage.py migrate
-python scripts/create_admin.py
-python scripts/seed_buildings.py
+python scripts\create_admin.py
+python scripts\seed_buildings.py
 ```
 
 ## API Overview
